@@ -1,3 +1,10 @@
+To run single test suite run
+
+```bash
+stack test --ta '-p Tests.Optional'
+```
+
+
 # Functional Programming Course
 
 ![Data61](http://i.imgur.com/0h9dFhl.png)
