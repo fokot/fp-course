@@ -4,6 +4,11 @@ To run single test suite run
 stack test --ta '-p Tests.Optional'
 ```
 
+or
+```bash
+stack test --ta '-p Tests.List.'
+```
+
 
 # Functional Programming Course
 
