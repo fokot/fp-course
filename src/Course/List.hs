@@ -117,6 +117,7 @@ length ::
   List a
   -> Int
 length = foldLeft (\ acc _ -> acc + 1) 0
+--length = sum . map (const 1)
 
 -- | Map the given function on each element of the list.
 --
@@ -182,7 +183,11 @@ infixr 5 ++
 flatten ::
   List (List a)
   -> List a
-flatten = foldRight (++) Nil
+--flatten = foldRight (++) Nil
+flatten Nil = Nil
+flatten (Nil :. rest)  = flatten rest
+flatten ((h :. rest) :. b) = h :. flatten (rest :. b)
+
 
 -- | Map a function then flatten to a list.
 --
@@ -325,8 +330,7 @@ produce f x = x :. produce f (f x)
 notReverse ::
   List a
   -> List a
-notReverse =
-  error "todo: Is it even possible?"
+notReverse = const Nil
 
 ---- End of list exercises
 
