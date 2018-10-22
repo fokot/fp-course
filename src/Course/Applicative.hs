@@ -316,8 +316,10 @@ sequence ::
   Applicative f =>
   List (f a)
   -> f (List a)
-sequence Nil = pure Nil
-sequence (fa :. fas) = ((:.) <$> fa) <*> sequence fas
+--sequence Nil = pure Nil
+--sequence (fa :. fas) = ((:.) <$> fa) <*> sequence fas
+--sequence = foldLeft (\fList fa -> (:.) <$> fa <*> fList) (pure Nil)
+sequence = foldLeft (lift2 (flip (:.))) (pure Nil)
 
 
 
