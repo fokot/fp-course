@@ -268,7 +268,9 @@ lift1 = (<$>)
   f a
   -> f b
   -> f b
-(*>) a b = const <$> b <*> a
+--(*>) a b = const <$> b <*> a <- this is wrong !!! it has opposite order of effects
+--(*>) a b = (\ _ x -> x) <$> a <*> b
+(*>) = lift2 (const id)
 
 
 -- | Apply, discarding the value of the second argument.

@@ -145,7 +145,8 @@ join = (=<<) id
   f a
   -> (a -> f b)
   -> f b
-(>>=) = flip (=<<)
+--(>>=) = flip (=<<)
+(>>=) fa f = join $ f <$> fa
 
 infixl 1 >>=
 
