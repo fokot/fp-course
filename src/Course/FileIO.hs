@@ -2,6 +2,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RebindableSyntax #-}
+{-# LANGUAGE TupleSections #-}
 
 module Course.FileIO where
 
@@ -103,7 +104,7 @@ getFile ::
   FilePath
   -> IO (FilePath, Chars)
 getFile path =
-  readFile path >>= (\c -> pure (path, c))
+  (path,) <$> readFile path
 
 -- Given a list of file names, return list of (file name and file contents).
 -- Use @getFile@.
