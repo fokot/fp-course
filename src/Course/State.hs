@@ -13,6 +13,7 @@ import Course.Functor
 import Course.Applicative
 import Course.Monad
 import qualified Data.Set as S
+import Control.Monad (foldM_)
 
 -- $setup
 -- >>> import Test.QuickCheck.Function
@@ -65,6 +66,7 @@ put ::
   s
   -> State s ()
 put s = State ( \_ -> ((), s))
+-- put s = State ( const ((), s))
 
 -- | Implement the `Functor` instance for `State s`.
 --
@@ -159,8 +161,13 @@ firstRepeat ::
   Ord a =>
   List a
   -> Optional a
-firstRepeat =
-  error "todo: Course.State#firstRepeat"
+firstRepeat list = eval (findM nextElement list) S.empty
+  where
+  nextElement a = do
+    previousElements <- get
+    put $ S.insert a previousElements
+    pure $ S.member a previousElements
+
 
 -- | Remove all duplicate elements in a `List`.
 -- /Tip:/ Use `filtering` and `State` with a @Data.Set#Set@.
@@ -172,8 +179,16 @@ distinct ::
   Ord a =>
   List a
   -> List a
-distinct =
-  error "todo: Course.State#distinct"
+distinct list = error "todo distinct"
+---- FIXME
+--  where
+--  addDistinct Nil = get
+--  addDistinct (a:rest) = do
+--    previousElements <- get
+--    put $ S.insert a previousElements
+--    isMember = S.member a previousElements
+--    pure $ if isMember then S.member a previousElements
+
 
 -- | A happy number is a positive integer, where the sum of the square of its digits eventually reaches 1 after repetition.
 -- In contrast, a sad number (not a happy number) is where the sum of the square of its digits never reaches 1
